@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export GITROOT=git@orion.es.uwo.ca:uwoseismicimaging
+export GITROOT=https://orion.es.uwo.ca/git/uwoseismicimaging
+export HOSTCERT=/etc/ssl/certs/orion_es_uwo_ca.pem
 
 export GP=$HOME/pratt
 export FULLWV_ROOT=$GP
@@ -17,8 +18,11 @@ mkdir -p $GP/lib
 mkdir -p $GP/bin
 
 cd $GP/lib
-git clone $GITROOT/lib.git gfortran
+GIT_SSL_CAINFO=$HOSTCERT git clone $GITROOT/lib.git gfortran
 export GFDIR=$GP/lib/gfortran
+
+cd $GFDIR
+git config http.sslCAInfo $HOSTCERT
 
 for lib in $MAKELIBS
 do
@@ -29,11 +33,13 @@ done
 cd $GP
 git clone $GITROOT/fullwv.git fullwv
 cd fullwv
+git config http.sslCAInfo $HOSTCERT
 make
 
 cd $GP
 git clone $GITROOT/worksgy.git worksgy
 cd worksgy
+git config http.sslCAInfo $HOSTCERT
 make
 
 # ------------------------------------------------------------------------
