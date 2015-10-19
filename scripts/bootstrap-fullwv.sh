@@ -14,6 +14,7 @@ mkdir -p $GP/lib
 mkdir -p $GP/bin
 
 cd $GP/lib
+echo "Installing LIBRARIES..."
 GIT_SSL_CAINFO=$HOSTCERT git clone $GITROOT/lib.git gfortran
 export GFDIR=$GP/lib/gfortran
 
@@ -27,13 +28,15 @@ do
 done
 
 cd $GP
-git clone $GITROOT/fullwv.git fullwv
+echo "Installing FULLWV..."
+GIT_SSL_CAINFO=$HOSTCERT git clone $GITROOT/fullwv.git fullwv
 cd fullwv
 git config http.sslCAInfo $HOSTCERT
 make
 
 cd $GP
-git clone $GITROOT/worksgy.git worksgy
+echo "Installing WORKSGY..."
+GIT_SSL_CAINFO=$HOSTCERT git clone $GITROOT/worksgy.git worksgy
 cd worksgy
 git config http.sslCAInfo $HOSTCERT
 make
