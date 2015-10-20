@@ -1,11 +1,18 @@
 #!/bin/bash
 
-export CWPROOT=$HOME/SU
+export CWPROOTDEFAULT=$HOME/SU
 export SUVERSION=44
 export SURELEASE=44R0
 
 # ------------------------------------------------------------------------
 # Seismic Unix
+
+read -p "Install path? [$CWPROOTDEFAULT]: " CWPROOT
+export CWPROOT=${CWPROOT:-$CWPROOTDEFAULT}
+
+echo
+echo "Installing to $CWPROOT..."
+echo
 
 mkdir -p $CWPROOT
 cd $CWPROOT
@@ -22,8 +29,14 @@ make utils
 # ------------------------------------------------------------------------
 # System Environment
 
-cat >> $HOME/.bashrc << END
+read -p "Modify .bashrc? [Y]: " MODIFY
+export MODIFY=${MODIFY:-Y}
+
+case "$MODIFY" in
+    Y*|y*) cat >> $HOME/.bashrc << END
 
 export CWPROOT=$CWPROOT
 export PATH="$CWPROOT/bin:$PATH"
 END
+;;
+esac

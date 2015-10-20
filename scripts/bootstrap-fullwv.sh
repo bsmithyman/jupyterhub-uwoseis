@@ -3,12 +3,20 @@
 export GITROOT=https://orion.es.uwo.ca/git/uwoseismicimaging
 export HOSTCERT=/etc/ssl/certs/orion_es_uwo_ca.pem
 
-export GP=$HOME/pratt
-export FULLWV_ROOT=$GP
+export GPDEFAULT=$HOME/pratt
 export MAKELIBS="apgen dbssgy dbstrc fileio string useful"
 
 # ------------------------------------------------------------------------
 # UWO FWI codes
+
+read -p "Install path? [$GPDEFAULT]: " GP
+export GP=${GP:-$GPDEFAULT}
+
+echo
+echo "Installing to $GP..."
+echo
+
+export FULLWV_ROOT=$GP
 
 mkdir -p $GP/lib
 mkdir -p $GP/bin
@@ -47,9 +55,16 @@ make
 # ------------------------------------------------------------------------
 # System Environment
 
-cat >> $HOME/.bashrc << END
+read -p "Modify .bashrc? [Y]: " MODIFY
+export MODIFY=${MODIFY:-Y}
+
+case "$MODIFY" in
+    Y*|y*) cat >> $HOME/.bashrc << END
 
 export GP=$GP
 export FULLWV_ROOT=$FULLWV_ROOT
 export PATH="$GP/bin:$PATH"
 END
+;;
+esac
+
