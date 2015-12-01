@@ -1,2 +1,4 @@
 click
 mkdocs
+markdown-include
+python-markdown-math
