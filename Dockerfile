@@ -2,7 +2,7 @@
 FROM bsmithyman/jupyterhub-simpeg:latest
 MAINTAINER Brendan Smithyman <brendan@bitsmithy.net>
 
-RUN apt-get -y install libx11-dev
+RUN apt-get -y install libx11-dev python-sphinx
 
 ADD ssl/orion.pem /etc/ssl/certs/orion_es_uwo_ca.pem
 ADD scripts/* /usr/local/bin/
