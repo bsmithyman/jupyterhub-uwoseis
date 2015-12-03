@@ -2,3 +2,4 @@ click
 mkdocs
 markdown-include
 python-markdown-math
+sphinx-bootstrap-theme
